@@ -1,15 +1,17 @@
-# Web Macro
-Web macro template
+# Puzzle Macro
+puzzle macro
 
 ## Environment
-* Python 3.9
-* Selenium 4.1
-* Chrome 96
+* python 3.9
+* selenium 4.1
+* opencv-python
+* pillow
+* chrome 96
 
 ## Quick start
 ```shell
-git clone https://github.com/ppd0523/webmacro
-cd webmacro
+git clone https://github.com/ppd0523/puzzler
+cd puzzler
 python -m venv venv
 pip install -r requirements.txt
 
@@ -26,7 +28,7 @@ pyinstaller main.py --onefile --noconsole
 ## Running with Chrome extension
 Creating the `extensions/`, place the `*.crx` as shown below
 ```shell
-webmacro
+puzzler
 ├── README.md
 ├── extensions
 │   └── metamask_10_6_4_0.crx

@@ -21,9 +21,9 @@ from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
 log = SimpleLogger()
-service = Service(ChromeDriverManager().install())
 driver = None
 init_url = 'https://www.google.co.kr'
+
 
 def open_browser():
     def task():
@@ -40,6 +40,7 @@ def open_browser():
         files = glob.glob('./extensions/*')
         [opt.add_extension(file) for file in files if file.endswith('.crx')]
 
+        service = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=opt)
         driver.get(url=init_url)
 
@@ -65,18 +66,40 @@ def on_destroy(_root):
 
 if __name__ == "__main__":
     root = tk.Tk()
+    root.wm_attributes('-topmost', True)  # Top only
+    root.wm_attributes('-transparent', True)  # Allowed transparent
+
     root.title("Web Controller")
     root.geometry("480x320+100+100")
+    # root.attributes('-alpha', 1)
     root.resizable(True, True)
 
-    frame = tk.Frame(root, relief="solid")
-    frame.pack(side="left", fill="both", expand=True)
+    ########################### Button Frame ###########################
+    btn_frame = tk.Frame(root)
+    btn_frame.pack(side=tk.LEFT, )
 
-    button1 = tk.Button(frame, text='Open\nChrome', width=5, height=5, command=open_browser)
-    button1.pack(side='left')
+    btn_frame_opt = {
+        'master': btn_frame,
+        'height': 2,
+    }
+    btn_pack_opt = {
+        'pady': 10,
+    }
+    btn_open = tk.Button(**btn_frame_opt, text='Open', command=open_browser)
+    btn_open.pack(btn_pack_opt)
+    btn_start = tk.Button(**btn_frame_opt, text='start', command=open_browser)
+    btn_start.pack(btn_pack_opt)
+    btn_stop = tk.Button(**btn_frame_opt, text='stop')
+    btn_stop.pack(btn_pack_opt)
+    ####################################################################
 
-    button2 = tk.Button(frame, text='btn', width=5, height=5, command=on_text)
-    button2.pack(side='left')
+    screen_frame = tk.Frame(root, bg='red')
+    screen_frame.pack(side=tk.LEFT, expand=True, fill='both')
 
+    canvas = tk.Canvas(screen_frame, bg='systemTransparent')
+    canvas.pack(expand=True, fill='both', padx=5, pady=5)
+
+
+    ####################################################################
     root.protocol("WM_DELETE_WINDOW", partial(on_destroy, root))
     root.mainloop()

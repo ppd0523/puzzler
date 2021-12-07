@@ -1,6 +1,8 @@
 selenium
 webdriver-manager
 utc-simple-log
+pillow
+opencv-python
 #pyautogui
 #pywinauto
 #pyinstaller
